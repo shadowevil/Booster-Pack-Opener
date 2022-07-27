@@ -22,24 +22,24 @@ namespace BoosterPack
             SelectScreenButton = new Button("Open booster packs", (GameComponent._mg.windowWidth - 250) / 2,
                 ((GameComponent._mg.windowHeight - 30) / 2) - 100 + (50 * 0), 250, 30, 0.2f, 12.0f,
                 new Action(delegate {
-                GameComponent.transScreen = new TransitionScreen("SelectionScreen", new SelectionScreen());
+                    GameComponent.transScreen = new TransitionScreen("SelectionScreen", new SelectionScreen());
             }));
             DeckScreenButton = new Button("Deck Editor", (GameComponent._mg.windowWidth - 250) / 2,
                 ((GameComponent._mg.windowHeight - 30) / 2) - 100 + (50 * 1), 250, 30, 0.2f, 12.0f,
                 new Action(delegate {
-                GameComponent.transScreen = new TransitionScreen("DeckScreen", new DeckScreen());
+                    GameComponent.transScreen = new TransitionScreen("DeckScreen", new DeckScreen());
             }));
             OptionScreenButton = new Button("Options", (GameComponent._mg.windowWidth - 250) / 2,
                 ((GameComponent._mg.windowHeight - 30) / 2) - 100 + (50 * 2), 250, 30, 0.2f, 12.0f,
                 new Action(delegate {
-                GameComponent.transScreen = new TransitionScreen("MainMenuScreen", new MainMenuScreen());
+                    GameComponent.transScreen = new TransitionScreen("MainMenuScreen", new MainMenuScreen());
             }));
             ExitGameButton = new Button("Exit", (GameComponent._mg.windowWidth - 250) / 2,
                 ((GameComponent._mg.windowHeight - 30) / 2) - 100 + (50 * 3), 250, 30, 0.2f, 12.0f,
                 new Action(delegate {
-                GameComponent.transScreen = new TransitionScreen("ExitScreen", new ExitScreen());
+                    GameComponent.transScreen = new TransitionScreen("ExitScreen", new ExitScreen());
             }));
-            ButtonBackground = MonoGraphics.GetRoundedRectangle(300, 100 + (50 * 3), 0.5f);
+            ButtonBackground = MonoGraphics.GetRoundedRectangle(300, 100 + (50 * 3), 0.25f);
         }
 
         public override void Dispose()
@@ -74,10 +74,11 @@ namespace BoosterPack
     public class ExitScreen : Screen
     {
         private mgTimer exitTimer;
+        private bool exiting = false;
 
         public ExitScreen()
         {
-            exitTimer = new mgTimer(500.0);
+            exitTimer = new mgTimer(5000.0);
         }
 
         public override void Dispose()
@@ -92,9 +93,20 @@ namespace BoosterPack
 
         public override void Update(GameTime gameTime)
         {
-            if(exitTimer.hasTicked(gameTime))
+            if (!exiting)
             {
-                winmain._gameWindow.Exit();
+                if (exitTimer.hasTicked(gameTime))
+                {
+                    exiting = true;
+                }
+            }
+
+            if(exiting)
+            {
+                if(exitTimer.hasTicked(gameTime))
+                {
+                    winmain._gameWindow.Exit();
+                }
             }
         }
 

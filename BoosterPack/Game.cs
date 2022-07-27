@@ -127,24 +127,11 @@ namespace BoosterPack
 
         public static void changeScreens(string new_screen, Screen screen)
         {
-            // Check if _control contains the screen we are wanting to switch to
-            //   Prevents adding two of the same screen
-            if(_controls.ContainsKey(new_screen))
-            {
-                // We dispose of the current screen as we are wanting to adjust to the new one
-                (_controls[current_screen] as Screen).Dispose();
-                // Add it to the queue to be added to _control
-                _ControlsToRemove.Add(current_screen);
-                // Set the current_screen text to the new_screen text;
-                current_screen = new_screen;
-            } else
-            {
-                if(current_screen != "") (_controls[current_screen] as Screen).Dispose();
-                _ControlsToRemove.Add(current_screen);
-                // If the screen doesn't exist then we want to add it
-                _ControlsToAdd.Add(new_screen, screen);
-                current_screen = new_screen;
-            }
+            if(current_screen != "") (_controls[current_screen] as Screen).Dispose();
+            _ControlsToRemove.Add(current_screen);
+            // If the screen doesn't exist then we want to add it
+            _ControlsToAdd.Add(new_screen, screen);
+            current_screen = new_screen;
         }
     }
 }

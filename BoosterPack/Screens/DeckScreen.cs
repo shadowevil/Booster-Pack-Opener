@@ -36,17 +36,18 @@ namespace BoosterPack
             // Seed the random
             random = new Random(DateTime.Now.Millisecond);
 
-            // Initialize StashViewBox (Chest full of cards)
-            StashViewBox = new ScrollableBox(new Rectangle(GameComponent._mg.windowWidth - 240, GameComponent._mg.windowHeight - (GameComponent._mg.windowHeight / 2) - 140,
-                238, GameComponent._mg.windowHeight - (GameComponent._mg.windowHeight - (GameComponent._mg.windowHeight / 2) - 135)), 0,
-                (AvailableCards.Where(x => x.Value != null).ElementAt(0).Value.card.sourceRect.Height * 0.35f) + 4, 7);
-
             // Placeholder card so no empty space
             placeholderCard = getCardDataByID("301");
 
             // Description area and ScrollableBox area
             DescriptionRect = new Rectangle(0, (int)(placeholderCard.Value.Value.Height * 1.35f) + 5, (int)(placeholderCard.Value.Value.Width * 1.35f), GameComponent._mg.windowHeight - (int)(placeholderCard.Value.Value.Height * 1.35f) - 10);
             DescViewBox = new ScrollableBox(new Rectangle(DescriptionRect.X, DescriptionRect.Y + 80, DescriptionRect.Width, DescriptionRect.Height - 80), 0, 15, 15, 15.0f);
+
+            // Initialize StashViewBox (Chest full of cards)
+            StashViewBox = new ScrollableBox(new Rectangle(GameComponent._mg.windowWidth - 240, DescriptionRect.Y + 20,
+                238, DescriptionRect.Height - 20), 0,
+                (AvailableCards.Where(x => x.Value != null).ElementAt(0).Value.card.sourceRect.Height * 0.35f) + 4, 7);
+
 
             // Decks to add cards to
             _SideDeck = new DeckViewArea(new Rectangle(DescriptionRect.Width + 8, DescriptionRect.Y + 544, StashViewBox.scrollViewport.X - DescriptionRect.Width - 15, 184), "Side Deck", 15, null);
@@ -63,10 +64,10 @@ namespace BoosterPack
             StashViewBox.scrollSpeed = (AvailableCards.Where(x => x.Value != null).ElementAt(0).Value.card.sourceRect.Height * 0.35f) + 4;
 
             // UI Button to go back to the selection screen
-            BackButton = new Button("Exit", (int)(StashViewBox.scrollViewport.X + 152), (int)(StashViewBox.scrollViewport.Y - 22), 85, 20, 0.1f, 10.0f, new Action(delegate
+            BackButton = new Button("Main Menu", (int)(StashViewBox.scrollViewport.X + 152), (int)(StashViewBox.scrollViewport.Y - 22), 85, 20, 0.1f, 10.0f, new Action(delegate
             {
                 if (GameComponent.transScreen != null) return;
-                GameComponent.transScreen = new TransitionScreen("SelectionScreen", new SelectionScreen());
+                GameComponent.transScreen = new TransitionScreen("MainMenuScreen", new MainMenuScreen());
             }));
 
             FilterBounds = new Rectangle(DescriptionRect.Width + 8, 5, GameComponent._mg.windowWidth - (DescriptionRect.Width + 11), GameComponent._mg.windowHeight - (DescriptionRect.Height + 15));

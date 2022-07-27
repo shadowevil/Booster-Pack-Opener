@@ -30,6 +30,7 @@ namespace BoosterPack
             GraphicsDeviceManager.GraphicsProfile = _gp;
             GraphicsDeviceManager.SynchronizeWithVerticalRetrace = vsync;
             GraphicsDeviceManager.PreferMultiSampling = multisample;
+            window.Window.IsBorderless = true;
             windowHeight = _h;
             windowWidth = _w;
             GraphicsDeviceManager.ApplyChanges();

@@ -64,7 +64,7 @@ namespace BoosterPack
             _mg.Draw(btn, new Rectangle(rect.X-2, rect.Y-2, rect.Width+4, rect.Height+4), Color.Black);
             if (rect.Contains(winmain._mouse.mousePosition))
             {
-                _mg.Draw(btn, rect, Color.OrangeRed);
+                _mg.Draw(btn, new Rectangle(rect.X-4, rect.Y-4, rect.Width+8, rect.Height+8), Color.OrangeRed);
             }
             else
             {
