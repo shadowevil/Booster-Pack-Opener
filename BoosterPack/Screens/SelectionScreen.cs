@@ -25,10 +25,10 @@ namespace BoosterPack
             // Try to initalize the pack if it exists, if not could cause problems
             GameComponent.Boosters.TryGetValue("LOB", out selectedPack);
             pkHoverTimer = new mgTimer(0.15);
-            DeckScreenButton = new Button("Deck screen", GameComponent._mg.windowWidth - 100, GameComponent._mg.windowHeight - 25,
-                95, 20, 10.0f, new Action(delegate {
+            DeckScreenButton = new Button("Main Menu", GameComponent._mg.windowWidth - 100, GameComponent._mg.windowHeight - 25,
+                95, 20, 0.1f, 10.0f, new Action(delegate {
                     if (GameComponent.transScreen != null) return;
-                    GameComponent.transScreen = new TransitionScreen(TransitionScreen.Direction.OUT, "DeckScreen", null, new DeckScreen());
+                    GameComponent.transScreen = new TransitionScreen("MainMenuScreen", new MainMenuScreen());
                 }));
         }
 
@@ -110,7 +110,7 @@ namespace BoosterPack
                     if (winmain._mouse.Click())
                     {
                         GameComponent.ChosenBooster = selectedPack;
-                        GameComponent.changeScreens("UnpackScreen", selectedPack, new UnpackScreen());
+                        GameComponent.changeScreens("UnpackScreen", new UnpackScreen());
                     }
                 }
                 packPosUpdateCount++;

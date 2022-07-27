@@ -9,46 +9,81 @@ using System.Threading.Tasks;
 
 namespace BoosterPack
 {
+    public static class GUI
+    {
+        public static Texture2D RoundedRectangleTexture;
+        public static Texture2D topleftCorner;
+        public static Texture2D bottomLeftCorner;
+        public static Texture2D topRightCorner;
+        public static Texture2D bottomRightCorner;
+
+        public static void InitRoundedRectangle()
+        {
+            Color[] cData = new Color[53 * 53];
+            RoundedRectangleTexture.GetData<Color>(0, new Rectangle(0, 0, 53, 53), cData, 0, cData.Length);
+            topleftCorner = new Texture2D(GameComponent._mg._graphics, 53, 53);
+            topleftCorner.SetData(cData);
+
+            cData = new Color[53 * 53];
+            RoundedRectangleTexture.GetData<Color>(0, new Rectangle(203, 0, 53, 53), cData, 0, cData.Length);
+            topRightCorner = new Texture2D(GameComponent._mg._graphics, 53, 53);
+            topRightCorner.SetData(cData);
+
+            cData = new Color[53 * 53];
+            RoundedRectangleTexture.GetData<Color>(0, new Rectangle(0, 203, 53, 53), cData, 0, cData.Length);
+            bottomLeftCorner = new Texture2D(GameComponent._mg._graphics, 53, 53);
+            bottomLeftCorner.SetData(cData);
+
+            cData = new Color[53 * 53];
+            RoundedRectangleTexture.GetData<Color>(0, new Rectangle(203, 203, 53, 53), cData, 0, cData.Length);
+            bottomRightCorner = new Texture2D(GameComponent._mg._graphics, 53, 53);
+            bottomRightCorner.SetData(cData);
+        }
+    }
+
     public class Button : Component
     {
         private string text;
         private float fontSize;
-        private Rectangle btn;
-        private Rectangle btnBG;
+        private Texture2D btn;
+        private Rectangle rect;
         private Action action;
+        private bool hasClicked = false;
 
-        public Button(string text, int x, int y, int width, int height, float fontSize, Action action)
+        public Button(string text, int x, int y, int width, int height, float radious, float fontSize, Action action)
         {
             this.text = text;
             this.fontSize = fontSize;
-            btn = new Rectangle(x, y, width, height);
-            btnBG = new Rectangle(btn.X + 2, btn.Y + 2, btn.Width - 2, btn.Height - 2);
+            btn = MonoGraphics.GetRoundedRectangle(width, height, radious);
+            rect = new Rectangle(x, y, width, height);
             this.action = action;
         }
 
         public override void Draw(GameTime gameTime, ref MonoGraphics _mg)
         {
-            if (btn.Contains(winmain._mouse.mousePosition))
+            _mg.Draw(btn, new Rectangle(rect.X-2, rect.Y-2, rect.Width+4, rect.Height+4), Color.Black);
+            if (rect.Contains(winmain._mouse.mousePosition))
             {
-                _mg.DrawFilledRectangle(btn, Color.Black);
-                _mg.DrawFilledRectangle(btnBG, Color.White * 0.9f);
+                _mg.Draw(btn, rect, Color.OrangeRed);
             }
             else
             {
-                _mg.DrawFilledRectangle(btn, Color.Black);
-                _mg.DrawFilledRectangle(btnBG, Color.White * 0.5f);
+                _mg.Draw(btn, rect, Color.IndianRed);
             }
             float stringWidth = _mg.MeasureText(text, fontSize, true).X;
-            _mg.DrawString(text, btn.X + (btn.Width - stringWidth) / 2, btn.Y + 2, Color.Black, fontSize, true);
+            float stringHeight = _mg.MeasureText(text, fontSize, true).Y;
+            _mg.DrawString(text, rect.X + ((btn.Width - 27) - stringWidth) / 2, rect.Y + ((btn.Height - 27) - stringHeight) / 2, Color.Black, fontSize, true);
         }
 
         public override void Update(GameTime gameTime)
         {
-            if (btn.Contains(winmain._mouse.mousePosition))
+            if (hasClicked) return;
+            if (rect.Contains(winmain._mouse.mousePosition))
             {
                 if (winmain._mouse.Click())
                 {
                     action();
+                    hasClicked = true;
                     return;
                 }
             }

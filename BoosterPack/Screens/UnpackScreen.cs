@@ -54,9 +54,9 @@ namespace BoosterPack
             screenView = GameComponent.defaultScreenView;
             cardParticles = new List<CardParticles>();
 
-            BackButton = new Button("Done", GameComponent._mg.windowWidth - 100, GameComponent._mg.windowHeight - 25, 95, 20, 10.0f, new Action(delegate
+            BackButton = new Button("Done", GameComponent._mg.windowWidth - 100, GameComponent._mg.windowHeight - 25, 95, 20, 0.1f, 10.0f, new Action(delegate
             {
-                GameComponent.changeScreens("SelectionScreen", null, null);
+                GameComponent.changeScreens("SelectionScreen", new SelectionScreen());
             }));
 
             LoadCards(GameComponent.ChosenBooster.Cards);
@@ -158,7 +158,7 @@ namespace BoosterPack
             {
                 if (packOfCards.Count <= 0)
                 {
-                    GameComponent.changeScreens("SelectionScreen", null, new SelectionScreen());
+                    GameComponent.changeScreens("SelectionScreen", new SelectionScreen());
                     return;
                 }
                 if (!screenView)

@@ -23,7 +23,7 @@ namespace BoosterPack
         public static List<string> _ControlsToRemove;
         public static TransitionScreen transScreen;
 
-        public static string current_screen = "SelectionScreen";
+        public static string current_screen = "";
 
         public static Dictionary<string, BoosterPack> Boosters;
         public static BoosterPack ChosenBooster;
@@ -52,7 +52,7 @@ namespace BoosterPack
         public void Loading()
         {
             // Added new loading screen to make it Visually more appealing
-            changeScreens("LoadingScreen", null, new LoadingScreen());
+            changeScreens("LoadingScreen", new LoadingScreen());
         }
 
         public override void Update(GameTime gameTime)
@@ -75,7 +75,7 @@ namespace BoosterPack
             foreach (KeyValuePair<string, Component> c in _controls)
             {
                 if (!c.Key.Contains("Screen")) continue;
-                if (c.Key == current_screen)
+                if (c.Key == current_screen && c.Value != null)
                     c.Value.Update(gameTime);
             }
 
@@ -107,7 +107,7 @@ namespace BoosterPack
             foreach (KeyValuePair<string, Component> c in _controls)
             {
                 if (!c.Key.Contains("Screen")) continue;
-                if (c.Key == current_screen)
+                if (c.Key == current_screen && c.Value != null)
                     c.Value.Draw(gameTime, ref _mg);
             }
 
@@ -125,7 +125,7 @@ namespace BoosterPack
             }
         }
 
-        public static void changeScreens(string new_screen, BoosterPack selectedPack, Screen screen)
+        public static void changeScreens(string new_screen, Screen screen)
         {
             // Check if _control contains the screen we are wanting to switch to
             //   Prevents adding two of the same screen
@@ -139,6 +139,8 @@ namespace BoosterPack
                 current_screen = new_screen;
             } else
             {
+                if(current_screen != "") (_controls[current_screen] as Screen).Dispose();
+                _ControlsToRemove.Add(current_screen);
                 // If the screen doesn't exist then we want to add it
                 _ControlsToAdd.Add(new_screen, screen);
                 current_screen = new_screen;

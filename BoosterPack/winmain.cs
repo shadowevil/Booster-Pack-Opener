@@ -132,7 +132,7 @@ namespace BoosterPack
                 
                 // Begin and initalize the drawing phase.
                 _mg.BeginSpriteBatch();
-
+                _mg._graphics.SetRenderTarget(null);
                 // Draw all components (draw order is based on what position it is in the code)
                 foreach (Component c in _controls)
                     c.Draw(gameTime, ref _mg);

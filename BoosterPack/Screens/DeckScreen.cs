@@ -63,10 +63,10 @@ namespace BoosterPack
             StashViewBox.scrollSpeed = (AvailableCards.Where(x => x.Value != null).ElementAt(0).Value.card.sourceRect.Height * 0.35f) + 4;
 
             // UI Button to go back to the selection screen
-            BackButton = new Button("Exit", (int)(StashViewBox.scrollViewport.X + 152), (int)(StashViewBox.scrollViewport.Y - 22), 85, 20, 10.0f, new Action(delegate
+            BackButton = new Button("Exit", (int)(StashViewBox.scrollViewport.X + 152), (int)(StashViewBox.scrollViewport.Y - 22), 85, 20, 0.1f, 10.0f, new Action(delegate
             {
                 if (GameComponent.transScreen != null) return;
-                GameComponent.transScreen = new TransitionScreen(TransitionScreen.Direction.OUT, "SelectionScreen", null, new SelectionScreen());
+                GameComponent.transScreen = new TransitionScreen("SelectionScreen", new SelectionScreen());
             }));
 
             FilterBounds = new Rectangle(DescriptionRect.Width + 8, 5, GameComponent._mg.windowWidth - (DescriptionRect.Width + 11), GameComponent._mg.windowHeight - (DescriptionRect.Height + 15));

@@ -67,11 +67,12 @@
     <Compile Include="Attributes.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Button.cs" />
-    <Compile Include="Card.cs" />
+    <Compile Include="Screens\MainMenuScreen.cs" />
+    <Compile Include="UI\Button.cs" />
+    <Compile Include="Card\Card.cs" />
     <Compile Include="Game.cs" />
     <Compile Include="Monogame\MathHelper.cs" />
-    <Compile Include="Pack.cs" />
+    <Compile Include="Card\Pack\Pack.cs" />
     <Compile Include="Monogame\Component.cs" />
     <Compile Include="Monogame\FramesPerSecond.cs" />
     <Compile Include="Monogame\mgTimer.cs" />
@@ -80,11 +81,11 @@
     <Compile Include="Monogame\Sprite.cs" />
     <Compile Include="Screens\DeckScreen.cs" />
     <Compile Include="Screens\LoadingScreen.cs" />
-    <Compile Include="Screens\Screens.cs" />
+    <Compile Include="Monogame\Screens.cs" />
     <Compile Include="Screens\SelectionScreen.cs" />
     <Compile Include="SQLLite.cs" />
     <Compile Include="Screens\UnpackScreen.cs" />
-    <Compile Include="Screens\TransitionScreen.cs" />
+    <Compile Include="Monogame\TransitionScreen.cs" />
     <Compile Include="winmain.cs" />
   </ItemGroup>
   <ItemGroup>

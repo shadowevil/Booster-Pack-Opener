@@ -81,6 +81,9 @@ namespace BoosterPack
 
                             DropDownMenu.arrowDown = Sprite.GetTexture(".\\Data\\booster\\arrowdown.png");
 
+                            GUI.RoundedRectangleTexture = Sprite.GetTexture(".\\Data\\booster\\rounded_rect.png");
+                            GUI.InitRoundedRectangle();
+
                             GameComponent.cardRarityDB = new DataClass(Directory.GetCurrentDirectory() + "\\Data\\cardrarity.cdb");
 
                             // Preload and initialize all booster packs into memory (images/data)
@@ -114,7 +117,7 @@ namespace BoosterPack
         private void Finished()
         {
             if (finished) return;
-            GameComponent.transScreen = new TransitionScreen(TransitionScreen.Direction.OUT, "SelectionScreen", null, new SelectionScreen());
+            GameComponent.transScreen = new TransitionScreen("MainMenuScreen", new MainMenuScreen());
             finished = true;
         }
 

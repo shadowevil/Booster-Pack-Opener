@@ -23,20 +23,18 @@ namespace BoosterPack
         private Direction dir;
 
         private string new_screen;
-        private BoosterPack selectedPack;
         private Screen screen;
 
         public bool finished = false;
 
-        public TransitionScreen(Direction direction, string new_screen, BoosterPack selectedPack, Screen screen)
+        public TransitionScreen(string new_screen, Screen screen)
         {
-            this.dir = direction;
+            this.dir = Direction.OUT;
             if (dir == Direction.IN) opacity = 1.0f;
             if (dir == Direction.OUT) opacity = 0.0f;
             rect = new Rectangle(0, 0, GameComponent._mg.windowWidth, GameComponent._mg.windowHeight);
             timer = new mgTimer(0.15);
             this.new_screen = new_screen;
-            this.selectedPack = selectedPack;
             this.screen = screen;
         }
 
@@ -77,7 +75,7 @@ namespace BoosterPack
 
         public void ChangeScreensNow()
         {
-            GameComponent.changeScreens(new_screen, selectedPack, screen);
+            GameComponent.changeScreens(new_screen, screen);
         }
 
         public override void UpdateKeyInput(GameTime gameTime, Keys key, bool keyValue)

@@ -244,6 +244,33 @@ namespace BoosterPack
         {
             return GameComponent._mg.font[new KeyValuePair<float, bool>(fontSize, bold)].MeasureString(text);
         }
+
+        public static Texture2D GetRoundedRectangle(int width, int height, float radius)
+        {
+            Rectangle rect = new Rectangle(0, 0, (int)(53.0f * 1.5f) + (int)(width - 53.0f), (int)(53.0f * 1.5f) + (int)(height - 53.0f));
+            RenderTarget2D renderTarget2D = new RenderTarget2D(GameComponent._mg._graphics, rect.Width, rect.Height);
+            Texture2D returntexture = new Texture2D(GameComponent._mg._graphics, rect.Width, rect.Height);
+
+            GameComponent._mg._graphics.SetRenderTarget(renderTarget2D);
+            GameComponent._mg._graphics.Clear(Color.Fuchsia);
+            GameComponent._mg.BeginSpriteBatch();
+            GameComponent._mg.DrawFilledRectangle(new Rectangle(rect.X + (int)(53.0f * radius), rect.Y, rect.Width - (int)((53.0f * radius) * 2) + 2, rect.Height), Color.White);
+            GameComponent._mg.DrawFilledRectangle(new Rectangle(rect.X, rect.Y + (int)(53.0f * radius), rect.Width, rect.Height - (int)((53.0f * radius) * 2) + 2), Color.White);
+            GameComponent._mg.Draw(GUI.topleftCorner, new Vector2(rect.X, rect.Y), GUI.topleftCorner.Bounds, Color.White, 0.0f, Vector2.Zero, radius, SpriteEffects.None, 0.0f);
+            GameComponent._mg.Draw(GUI.topRightCorner, new Vector2(rect.X + rect.Width - (int)(53.0f * radius), rect.Y), GUI.topRightCorner.Bounds, Color.White, 0.0f, Vector2.Zero, radius, SpriteEffects.None, 0.0f);
+            GameComponent._mg.Draw(GUI.bottomRightCorner, new Vector2(rect.X + rect.Width - (int)(53.0f * radius), rect.Y + rect.Height - (int)(53.0f * radius)), GUI.bottomRightCorner.Bounds, Color.White, 0.0f, Vector2.Zero, radius, SpriteEffects.None, 0.0f);
+            GameComponent._mg.Draw(GUI.bottomLeftCorner, new Vector2(rect.X, rect.Y + rect.Height - (int)(53.0f * radius)), GUI.bottomLeftCorner.Bounds, Color.White, 0.0f, Vector2.Zero, radius, SpriteEffects.None, 0.0f);
+            GameComponent._mg.EndSpriteBatch();
+            Color[] texdata = new Color[renderTarget2D.Width * renderTarget2D.Height];
+            renderTarget2D.GetData<Color>(texdata);
+            for (int i = 0; i < texdata.Length; i++)
+                if (texdata[i] != null)
+                    if (texdata[i] == Color.Fuchsia || texdata[i] != Color.White)
+                        texdata[i] = Color.Transparent;
+            returntexture.SetData(texdata);
+
+            return returntexture;
+        }
     }
 
 
